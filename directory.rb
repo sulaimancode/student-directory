@@ -1,4 +1,4 @@
-# let's put all students inot an array
+
 def input_students
   puts "Please enter the names of the students and their cohort on the next line"
   puts "To finish, type 'quit' and hit enter twice"
@@ -20,7 +20,11 @@ def input_students
   while name != 'quit' do
     # add the student has to the array
     students << {name: name, cohort: cohort.gsub(/\s+/,"_").downcase.to_sym}
+    if students.count == 1
+    puts "Now we have 1 student"
+  else
     puts "Now we have #{students.count} students"
+  end
     # get another name from user
     name = gets.chomp
     name = "no name was given" if name.empty?
