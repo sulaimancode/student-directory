@@ -1,14 +1,13 @@
 # let's put all students inot an array
 def input_students
   puts "Please enter the names of the students"
-  puts "Names must begin with the letter 'T' "
   puts "To finish, just hit return twice"
   # create an empty array
   students = []
   #get the first name
   name = gets.chomp
   # while the name is not empty, repeat this code
-  while !name.empty? && name.chars.first == "T" do
+  while !name.empty? do
     # add the student has to the array
     students << {name: name, cohort: :november}
     puts "Now we have #{students.count} students"
@@ -26,9 +25,8 @@ puts "-------------"
 end
 
 def print(students)
-  students.each_with_index do |student, i|
-    puts "#{i.to_i + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
-  end
+
+  students.each_with_index { |student, i| puts "#{i.to_i + 1}. #{student[:name]} (#{student[:cohort]} cohort)" if student[:name].length < 12 }
 end
 
 def print_footer(students)
