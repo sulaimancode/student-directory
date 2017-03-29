@@ -1,13 +1,14 @@
 # let's put all students inot an array
 def input_students
   puts "Please enter the names of the students"
+  puts "Names must begin with the letter 'T' "
   puts "To finish, just hit return twice"
   # create an empty array
   students = []
   #get the first name
   name = gets.chomp
   # while the name is not empty, repeat this code
-  while !name.empty? do
+  while !name.empty? && name.chars.first == "T" do
     # add the student has to the array
     students << {name: name, cohort: :november}
     puts "Now we have #{students.count} students"
