@@ -59,6 +59,8 @@ puts "Overall, we have #{students.count} great students".center(50)
 end
 #nothing happend until we call methods
 students = input_students
+if students.count > 0
 print_header
 print(students)
 print_footer(students)
+end
