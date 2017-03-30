@@ -5,16 +5,16 @@ def input_students
   # create an empty array
   students = []
   #get the first name
-  name = gets.chomp
+  name = gets.delete("\n")
   name = "no name was given" if name.empty?
 
-  cohort = gets.chomp.downcase
+  cohort = gets.delete("\n").downcase
   cohort = "no cohort was given" if cohort.empty?
   months = %w(january february march april may june july august september october november december )
   months << "no cohort was given"
   while !months.include? cohort
     puts "Please type the correct cohort"
-    cohort = gets.chomp.downcase
+    cohort = gets.delete("\n").downcase
   end
 
   while name != 'quit' do
