@@ -46,12 +46,12 @@ puts "--------------------------".center(50)
 end
 
 def print(students)
-  i = 0
-  while i < students.count
-    str = "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)"
-    puts str.center(str.length + 15)
-    i += 1
-  end
+  students.group_by { |hash| hash[:cohort] }.each { |key, value|
+    puts "#{key.capitalize} cohort:"
+    value.each {|v|
+       puts v[:name]
+        }
+       puts "----------------------------" }
 end
 
 def print_footer(students)
