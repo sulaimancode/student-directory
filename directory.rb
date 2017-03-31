@@ -1,8 +1,7 @@
+@students = []
 def input_students
 
     puts "Please enter the name of the student, or 'quit' to exit"
-    # create an empty array
-    students = []
     #get the first name
     name = gets.delete("\n")
     name = "no name was given" if name.empty?
@@ -18,11 +17,11 @@ def input_students
       end
     while name != 'quit' do
       # add the student has to the array
-      students << {name: name, cohort: cohort.gsub(/\s+/,"_").downcase.to_sym}
-        if students.count == 1
+      @students << {name: name, cohort: cohort.gsub(/\s+/,"_").downcase.to_sym}
+        if @students.count == 1
           puts "Now we have 1 student"
         else
-          puts "Now we have #{students.count} students"
+          puts "Now we have #{@students.count} students"
         end
       # get another name from user
       puts "Enter name of another student, or 'quit' to exit."
@@ -39,8 +38,6 @@ def input_students
       end
     end
   end
-  # return the array of students
-  students
 end
 
 
@@ -49,8 +46,8 @@ puts "The students of Villians Academy".center(50)
 puts "--------------------------".center(50)
 end
 
-def print(students)
-  students.group_by { |hash| hash[:cohort] }.each { |key, value|
+def print_students_list
+  @students.group_by { |student| student[:cohort] }.each { |key, value|
     puts "#{key.capitalize} cohort:"
     value.each {|v|
        puts v[:name]
@@ -58,32 +55,39 @@ def print(students)
        puts "----------------------------" }
 end
 
-def print_footer(students)
-puts "Overall, we have #{students.count} great students".center(50)
+def print_footer
+puts "Overall, we have #{@students.count} great students".center(50)
+end
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end
+
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "9"
+    exit
+  else
+    puts "I don't know what you mean, try again"
+  end
 end
 
 def interactive_menu
-  students = []
   loop do
-    # 1. print the menu and ask the user what to do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
-    # 2. read the input and save it intor a variable
-    selection = gets.chomp
-    # 3. do what the user has asked
-    case selection
-    when "1"
-      students = input_students
-    when "2"
-      print_header
-      print(students)
-      print_footer(students)
-    when "9"
-      exit
-    else
-      puts "I don't konw what you meant, try again"
-    end
+    print_menu
+    process(gets.chomp)
   end
 end
 #nothing happend until we call methods
