@@ -3,17 +3,17 @@ def input_students
 
     puts "Please enter the name of the student, or 'quit' to exit"
     #get the first name
-    name = gets.delete("\n")
+    name = STDIN.gets.delete("\n")
     name = "no name was given" if name.empty?
   if name != 'quit'
     puts "Enter student's cohort"
-    cohort = gets.delete("\n").downcase
+    cohort = STDIN.gets.delete("\n").downcase
     cohort = "no cohort was given" if cohort.empty?
     months = %w(january february march april may june july august september october november december )
     months << "no cohort was given"
       while !months.include? cohort
         puts "Please type the correct cohort"
-        cohort = gets.delete("\n").downcase
+        cohort = STDIN.gets.delete("\n").downcase
       end
     while name != 'quit' do
       # add the student has to the array
@@ -25,15 +25,15 @@ def input_students
         end
       # get another name from user
       puts "Enter name of another student, or 'quit' to exit."
-      name = gets.chomp
+      name = STDIN.gets.chomp
       name = "no name was given" if name.empty?
         if name != 'quit'
       puts "Enter students cohort"
-      cohort = gets.chomp.downcase
+      cohort = STDIN.gets.chomp.downcase
       cohort = "no cohort was given" if cohort.empty?
         while !months.include? cohort
           puts "Please type the correct cohort"
-          cohort = gets.chomp.downcase
+          cohort = STDIN.gets.chomp.downcase
         end
       end
     end
@@ -93,7 +93,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -109,13 +109,28 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
 end
+
+def try_load_students
+  filename = ARGV.first # first argument from the command line
+  return if filename.nil? #get out of the method if it isn't given
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
+
 #nothing happend until we call methods
+try_load_students
 interactive_menu
