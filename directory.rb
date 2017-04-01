@@ -86,10 +86,12 @@ def process(selection)
   case selection
   when "1"
     input_students
+    puts "input successful"
   when "2"
     show_students
   when "3"
     save_students
+    puts "successfully saved list to students.csv"
   when "4"
     load_students
   when "9"
