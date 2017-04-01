@@ -3,21 +3,21 @@ def input_students
 
     puts "Please enter the name of the student, or 'quit' to exit"
     #get the first name
-    name = STDIN.gets.delete("\n")
-    name = "no name was given" if name.empty?
-  if name != 'quit'
+    @name = STDIN.gets.delete("\n")
+    @name = "no name was given" if @name.empty?
+  if @name != 'quit'
     puts "Enter student's cohort"
-    cohort = STDIN.gets.delete("\n").downcase
-    cohort = "no cohort was given" if cohort.empty?
+    @cohort = STDIN.gets.delete("\n").downcase
+    @cohort = "no cohort was given" if @cohort.empty?
     months = %w(january february march april may june july august september october november december )
     months << "no cohort was given"
-      while !months.include? cohort
+      while !months.include? @cohort
         puts "Please type the correct cohort"
-        cohort = STDIN.gets.delete("\n").downcase
+        @cohort = STDIN.gets.delete("\n").downcase
       end
-    while name != 'quit' do
+    while @name != 'quit' do
       # add the student has to the array
-      @students << {name: name, cohort: cohort.gsub(/\s+/,"_").downcase.to_sym}
+      add_students_to_array
         if @students.count == 1
           puts "Now we have 1 student"
         else
@@ -25,21 +25,24 @@ def input_students
         end
       # get another name from user
       puts "Enter name of another student, or 'quit' to exit."
-      name = STDIN.gets.chomp
-      name = "no name was given" if name.empty?
-        if name != 'quit'
+      @name = STDIN.gets.chomp
+      @name = "no name was given" if @name.empty?
+        if @name != 'quit'
       puts "Enter students cohort"
-      cohort = STDIN.gets.chomp.downcase
-      cohort = "no cohort was given" if cohort.empty?
-        while !months.include? cohort
+      @cohort = STDIN.gets.chomp.downcase
+      @cohort = "no cohort was given" if @cohort.empty?
+        while !months.include? @cohort
           puts "Please type the correct cohort"
-          cohort = STDIN.gets.chomp.downcase
+          @cohort = STDIN.gets.chomp.downcase
         end
       end
     end
   end
 end
 
+def add_students_to_array
+  @students << {name: @name, cohort: @cohort.gsub(/\s+/,"_").downcase.to_sym}
+end
 
 def print_header
 puts "The students of Villians Academy".center(50)
@@ -49,6 +52,7 @@ end
 def print_students_list
   @students.group_by { |student| student[:cohort] }.each { |key, value|
     puts "#{key.capitalize} cohort:"
+    puts ""
     value.each {|v|
        puts v[:name]
         }
@@ -112,8 +116,8 @@ end
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    @name, @cohort = line.chomp.split(',')
+    add_students_to_array
   end
   file.close
 end
