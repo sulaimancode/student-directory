@@ -1,4 +1,14 @@
 @students = []
+@months = %w(january february march april may june july august september october november december )
+@months << "no cohort was given"
+def typo
+  while !@months.include? @cohort
+    puts "Please type the correct cohort"
+    @cohort = STDIN.gets.delete("\n").downcase
+  end
+end
+
+
 def input_students
 
     puts "Please enter the name of the student, or 'quit' to exit"
@@ -9,12 +19,7 @@ def input_students
     puts "Enter student's cohort"
     @cohort = STDIN.gets.delete("\n").downcase
     @cohort = "no cohort was given" if @cohort.empty?
-    months = %w(january february march april may june july august september october november december )
-    months << "no cohort was given"
-      while !months.include? @cohort
-        puts "Please type the correct cohort"
-        @cohort = STDIN.gets.delete("\n").downcase
-      end
+    typo
     while @name != 'quit' do
       # add the student has to the array
       add_students_to_array
@@ -31,10 +36,7 @@ def input_students
       puts "Enter students cohort"
       @cohort = STDIN.gets.chomp.downcase
       @cohort = "no cohort was given" if @cohort.empty?
-        while !months.include? @cohort
-          puts "Please type the correct cohort"
-          @cohort = STDIN.gets.chomp.downcase
-        end
+      typo
       end
     end
   end
