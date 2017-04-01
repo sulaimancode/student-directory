@@ -14,12 +14,15 @@ def ask_and_gets_cohort
   @cohort = "no cohort was given" if @cohort.empty? # assign default
 end
 
-def input_students
+def ask_and_gets_name
+  @name = STDIN.gets.delete("\n")
+  @name = "no name was given" if @name.empty?
+end
 
-    puts "Please enter the name of the student, or 'quit' to exit"
+def input_students
+puts "Please enter the name of the student, or 'quit' to exit"
     #get the first name
-    @name = STDIN.gets.delete("\n")
-    @name = "no name was given" if @name.empty?
+ask_and_gets_name
   if @name != 'quit'
     ask_and_gets_cohort
     typo
@@ -33,9 +36,8 @@ def input_students
         end
       # get another name from user
       puts "Enter name of another student, or 'quit' to exit."
-      @name = STDIN.gets.chomp
-      @name = "no name was given" if @name.empty?
-        if @name != 'quit'
+      ask_and_gets_name
+      if @name != 'quit'
       ask_and_gets_cohort
       typo
       end
@@ -59,7 +61,7 @@ def print_students_list
     value.each {|v|
        puts v[:name]
         }
-       puts "----------------------------" }
+       puts "--------------------------".center(50) }
 end
 
 def print_footer
