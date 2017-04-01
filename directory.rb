@@ -71,8 +71,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to a file"
+  puts "4. Load the list from a file"
   puts "9. Exit"
 end
 
@@ -90,11 +90,19 @@ def process(selection)
   when "2"
     show_students
   when "3"
-    save_students
-    puts "successfully saved list to students.csv"
+    puts "Which file would you like to save it to?"
+    file_name = STDIN.gets.chomp
+    save_students(file_name)
+    puts "successfully saved list to #{file_name}"
   when "4"
-    load_students
-    puts "successfully loaded list from students.csv"
+    puts "Which file would you like to load from?"
+    load_file =  STDIN.gets.chomp
+    while !File.exist?(load_file)
+      puts "File does not exist please type a valid file"
+      load_file = STDIN.gets.chomp
+    end
+    load_students(load_file)
+    puts "successfully loaded list from #{load_file}"
   when "9"
     exit
   else
@@ -109,9 +117,9 @@ def interactive_menu
   end
 end
 
-def save_students
+def save_students(filename)
   # open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(filename, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -121,7 +129,7 @@ def save_students
   file.close
 end
 
-def load_students(filename = "students.csv")
+def load_students(filename)
   file = File.open(filename, "r")
   file.readlines.each do |line|
     @name, @cohort = line.chomp.split(',')
@@ -130,6 +138,7 @@ def load_students(filename = "students.csv")
   file.close
 end
 
+=begin
 def try_load_students
   filename = ARGV.first # first argument from the command line
   if filename.nil?
@@ -144,8 +153,8 @@ def try_load_students
     exit
   end
 end
-
+=end
 
 #nothing happend until we call methods
-try_load_students
+#try_load_students
 interactive_menu
