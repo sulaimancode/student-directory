@@ -94,6 +94,7 @@ def process(selection)
     puts "successfully saved list to students.csv"
   when "4"
     load_students
+    puts "successfully loaded list from students.csv"
   when "9"
     exit
   else
