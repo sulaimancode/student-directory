@@ -8,6 +8,11 @@ def typo
   end
 end
 
+def ask_and_gets_cohort
+  puts "Enter students cohort"
+  @cohort = STDIN.gets.chomp.downcase
+  @cohort = "no cohort was given" if @cohort.empty? # assign default
+end
 
 def input_students
 
@@ -16,9 +21,7 @@ def input_students
     @name = STDIN.gets.delete("\n")
     @name = "no name was given" if @name.empty?
   if @name != 'quit'
-    puts "Enter student's cohort"
-    @cohort = STDIN.gets.delete("\n").downcase
-    @cohort = "no cohort was given" if @cohort.empty?
+    ask_and_gets_cohort
     typo
     while @name != 'quit' do
       # add the student has to the array
@@ -33,9 +36,7 @@ def input_students
       @name = STDIN.gets.chomp
       @name = "no name was given" if @name.empty?
         if @name != 'quit'
-      puts "Enter students cohort"
-      @cohort = STDIN.gets.chomp.downcase
-      @cohort = "no cohort was given" if @cohort.empty?
+      ask_and_gets_cohort
       typo
       end
     end
