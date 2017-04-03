@@ -1,3 +1,4 @@
+require 'csv'
 @students = []
 @months = %w(january february march april may june july august september october november december )
 @months << "no cohort was given"
@@ -111,23 +112,20 @@ end
 
 def save_students
   # open the file for writing
-File.open("students.csv", "w") do |file|
+CSV.open("students.csv", "w") do |file|
   # iterate over the array of students
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      file.puts student_data
     end
   end
 end
 
 def load_students(filename = "students.csv")
-File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-    @name, @cohort = line.chomp.split(',')
+CSV.foreach(filename) do |line|
+    @name, @cohort = line
     add_students_to_array
     end
-  end
 end
 
 def try_load_students
